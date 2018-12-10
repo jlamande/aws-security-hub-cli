@@ -1,0 +1,12 @@
+{
+  "name": "security-hub",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Skywise System Team",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.373.0",
+    "chalk": "^2.4.1",
+    "commander": "^2.19.0"
+  }
+}

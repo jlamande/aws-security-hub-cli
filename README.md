@@ -1,9 +1,9 @@
-# Aws Security Hub multi account Scripts
+# Aws Security Hub CLI
 
 ## Purpose
 
-To provide a simple CLI to manage the AWS Security Hub service.
-Some commands are simple calls to the [Security Hub API](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SecurityHub.html). And some are more useful as the add-to-hub, allowing to register an account as a member in the Security Hub of the Master Account.
+To provide a simple CLI to manage the [AWS Security Hub service](https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html).
+Some commands are simple calls to the [Security Hub API](https://docs.aws.amazon.com/securityhub/1.0/APIReference/Welcome.html) using the [AWS.Security JS SDK](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SecurityHub.html) and simplifying responses. Some others are more useful as the `add-to-hub` command, allowing to register an account as a member in the Security Hub of the Master Account.
 
 ## Prereqs
 

@@ -1,5 +1,10 @@
 # Aws Security Hub multi account Scripts
 
+## Purpose
+
+To provide a simple CLI to manage the AWS Security Hub service.
+Some commands are simple calls to the [Security Hub API](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SecurityHub.html). And some are more useful as the add-to-hub, allowing to register an account as a member in the Security Hub of the Master Account.
+
 ## Prereqs
 
 - node
@@ -26,6 +31,14 @@ Use the CLI for help and view the available commands :
 then for a command :
 ```
 ./index.js <command> --help
+```
+
+### Sample commands
+
+Register the account "member" (referenced by the profile 'member' in your `~/.aws/credentials` file) in the master account (referenced by the profile 'master').
+
+```
+AWS_PROFILE=master ./index.js add-to-hub -p member -e master@mail.com
 ```
 
 ## Used Libraries

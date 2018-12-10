@@ -5,7 +5,7 @@
 - node
 - npm or yarn
 
-Note : the AWS_PROFILE environment variable (or by defaults the 'default' profile) is used to resolve the master account. So ensure that your AWS environment is well configured.
+Note : the AWS_PROFILE environment variable (or by defaults the 'default' profile) is used to execute commands. So ensure that your AWS environment is well configured.
 
 ## Installation
 
@@ -27,8 +27,6 @@ then for a command :
 ```
 ./index.js <command> --help
 ```
-
-Note : the AWS_PROFILE environment variable (or by defaults the 'default' profile) is used to resolve the master account. So ensure that your AWS environment is well configured.
 
 ## Used Libraries
 

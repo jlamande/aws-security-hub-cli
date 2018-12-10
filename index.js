@@ -7,14 +7,13 @@ program.version("0.0.1").description("Security Hub Management CLI");
 program
   .command("add-to-hub")
   .alias("a")
-  .description("Add an account to the hub")
+  .description("Add an account to the Security Hub of the master account.\nNote that the AWS_PROFILE environment variable (or by defaults the 'default' profile) is used to resolve the master account.\nSo ensure that your AWS environment is well configured.")
   .option(
     "-p, --profiles [profiles]",
     "Which AWS profile to use to configure the member accounts. Defaults to 'default'",
     "default"
   )
-  // assume role not supported yet (use profile for now)
-  // .option("-r, --role [role]", "Which role to assume to configure the member account.")
+  .option("-r, --role [role]", "Which role to assume to configure the member account. This option is not supported yet (use the profiles option)")
   .option(
     "-e, --emailAddress <email-address>",
     "Which email address must be used in the Hub invitation"
@@ -30,7 +29,7 @@ program
           emailAddess: options.emailAddress
         };
       })
-      .map(handle);
+      .map(handleAddToHub);
   });
 program.command("list-members").action(function(fakeArg, options) {
   const masterHub = new SecurityHub(process.env.AWS_PROFILE || "default");
@@ -46,7 +45,7 @@ program.command("list-invitations").action(function(fakeArg, options) {
 });
 program.parse(process.argv);
 
-async function handle({ profile, masterHub, emailAddress }) {
+async function handleAddToHub({ profile, masterHub, emailAddress }) {
   console.log(emailAddress);
   const memberHub = new SecurityHub(profile);
   // ensure security hub is activated on master account

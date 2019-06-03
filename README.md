@@ -38,8 +38,10 @@ then for a command :
 Register the account "member" (referenced by the profile 'member' in your `~/.aws/credentials` file) in the master account (referenced by the profile 'master').
 
 ```
-AWS_PROFILE=master ./index.js add-to-hub -p member -e master@mail.com
+AWS_PROFILE=master ./index.js add-to-hub -p <member> -e master@mail.com
 ```
+
+Note: you can specifiy multiple profiles, replacing <member> by profile1,profile2
 
 ## Used Libraries
 

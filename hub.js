@@ -129,6 +129,14 @@ class SecurityHub {
     });
   }
 
+  async enableCisAws() {
+    return this.hub.batchEnableStandards({
+      StandardsSubscriptionRequests: [{
+        StandardsArn: 'arn:aws:securityhub:::ruleset/cis-aws-foundations-benchmark/v/1.2.0'
+      }]
+    }).promise();
+  }
+
   // async listStandards() {
   //   const standards = await this.hub.getEnabledStandards().promise();
   //   if (standards && standards.StandardsSubscriptions) {

@@ -43,6 +43,12 @@ program.command("list-invitations").action(function(fakeArg, options) {
     console.log(invitations);
   });
 });
+program.command("enable-cis").action(function(fakeArg, options) {
+  const masterHub = new SecurityHub(process.env.AWS_PROFILE || "default");
+  masterHub.enableCisAws().then(status => {
+    console.log(status);
+  });
+});
 program.parse(process.argv);
 
 async function handleAddToHub({ profile, masterHub, emailAddress }) {

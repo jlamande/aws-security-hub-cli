@@ -26,24 +26,24 @@ program
         return {
           profile,
           masterHub,
-          emailAddess: options.emailAddress
+          emailAddress: options.emailAddress
         };
       })
       .map(handleAddToHub);
   });
-program.command("list-members").action(function(fakeArg, options) {
+program.command("list-members").alias("lm").action(function(fakeArg, options) {
   const masterHub = new SecurityHub(process.env.AWS_PROFILE || "default");
   masterHub.listMembers().then(members => {
     console.log(members);
   });
 });
-program.command("list-invitations").action(function(fakeArg, options) {
+program.command("list-invitations").alias("li").action(function(fakeArg, options) {
   const masterHub = new SecurityHub(process.env.AWS_PROFILE || "default");
   masterHub.listInvitations().then(invitations => {
     console.log(invitations);
   });
 });
-program.command("enable-cis").action(function(fakeArg, options) {
+program.command("enable-cis").alias("ec").action(function(fakeArg, options) {
   const masterHub = new SecurityHub(process.env.AWS_PROFILE || "default");
   masterHub.enableCisAws().then(status => {
     console.log(status);
@@ -52,8 +52,11 @@ program.command("enable-cis").action(function(fakeArg, options) {
 program.parse(process.argv);
 
 async function handleAddToHub({ profile, masterHub, emailAddress }) {
-  console.log(emailAddress);
+  console.log(`Add ${profile} to hub ${masterHub}`);
+  await masterHub.load();
   const memberHub = new SecurityHub(profile);
+  await memberHub.load();
+  console.log(memberHub.accountId);
   // ensure security hub is activated on master account
   return masterHub
     .enable()

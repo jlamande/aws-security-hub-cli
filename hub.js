@@ -6,24 +6,28 @@ const chalk = require("chalk");
 class SecurityHub {
   constructor(profile) {
     this.profile = profile;
-    var credentials = new AWS.SharedIniFileCredentials({
+    this.credentials = new AWS.SharedIniFileCredentials({
       profile: this.profile
     });
-    // AWS.config.credentials = credentials;
-    this.hub = new AWS.SecurityHub({ region: REGION, credentials });
-    const sts = new AWS.STS({ region: REGION, credentials });
-    sts
-      .getCallerIdentity()
-      .promise()
-      .then(infos => {
-        this.accountId = infos.Account;
-        // console.log(this.accountId);
-      })
-      .catch(err => {
-        this.warn("Error while loading account informations");
-        this.warn(err.stack);
-        // throw err;
-      });
+    this.hub = new AWS.SecurityHub({ region: REGION, credentials: this.credentials });
+    this.load();
+  }
+
+  async load() {
+    if(!this.accountId) {
+      const sts = new AWS.STS({ region: REGION, credentials: this.credentials });
+      return sts
+        .getCallerIdentity()
+        .promise()
+        .then(infos => {
+          this.accountId = infos.Account;
+        })
+        .catch(err => {
+          this.warn("Error while loading account informations");
+          this.warn(err.stack);
+          // throw err;
+        });
+    }
   }
 
   warn(message, ...args) {
@@ -40,7 +44,6 @@ class SecurityHub {
 
   async enable() {
     this.log(`Enable Hub`);
-    const log = this.log;
     return this.hub
       .enableSecurityHub()
       .promise()
@@ -48,7 +51,13 @@ class SecurityHub {
         function() {
           this.log("hub enabled");
         }.bind(this)
-      );
+      ).catch(err => {
+        if(err.message == 'Account is already subscribed to Security Hub') {
+          this.warn('Account already enabled');
+        } else {
+          this.error(err);
+        }
+      })
   }
 
   async invite(accountId, email) {

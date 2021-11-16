@@ -5,7 +5,7 @@
   "author": "Skywise System Team",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.373.0",
+    "aws-sdk": "^2.814.0",
     "chalk": "^2.4.1",
     "commander": "^2.19.0"
   }
